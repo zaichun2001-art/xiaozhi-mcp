@@ -1,9 +1,22 @@
-import os
-import subprocess
+import asyncio
+import sys
+from mcp.server import Server
+from mcp.server.stdio import stdio_server
 
-endpoint = os.environ.get("MCP_ENDPOINT")
-api_key = os.environ.get("TAVILY_API_KEY")
+# MCP 서버 초기화
+app = Server("xiaozhi-mcp")
 
-if endpoint and api_key:
-    cmd = f"npx -y @modelcontextprotocol/server-tavily --api-key {api_key}"
-    subprocess.run(f"python -m mcp_pipe {endpoint} -- {cmd}", shell=True)
+@app.list_tools()
+async def handle_list_tools() -> list:
+    return []
+
+async def main():
+    async with stdio_server() as (read_stream, write_stream):
+        await app.run(
+            read_stream,
+            write_stream,
+            app.create_initialization_options()
+        )
+
+if __name__ == "__main__":
+    asyncio.run(main())
