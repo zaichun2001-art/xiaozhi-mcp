@@ -62,8 +62,7 @@ async def call_tool(name: str, arguments: dict | None) -> list[types.TextContent
                 
     raise ValueError(f"Unknown tool: {name}")
 
-# 최신 mcp 라이브러리 핸들러 등록
-app.set_logging_level(types.LoggingLevel.INFO)
+# 도구 핸들러 연결 (set_logging_level 제거 완료)
 app.list_tools = list_tools
 app.call_tool = call_tool
 
