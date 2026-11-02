@@ -1,3 +1,5 @@
 mcp
 httpx
 websockets
+starlette
+uvicorn
