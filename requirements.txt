@@ -1,4 +1,3 @@
 mcp
 httpx
 websockets
-mcp_pipe
