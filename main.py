@@ -1,4 +1,5 @@
 import asyncio
+import os
 from mcp.server import Server
 from mcp.server.sse import SseServerTransport
 from starlette.applications import Starlette
@@ -6,10 +7,6 @@ from starlette.routing import Mount, Route
 import uvicorn
 
 app = Server("xiaozhi-mcp")
-
-@app.list_tools()
-async def handle_list_tools() -> list:
-    return []
 
 # SSE 전송을 위한 Starlette 앱 설정
 sse = SseServerTransport("/messages")
@@ -32,4 +29,5 @@ starlette_app = Starlette(
 )
 
 if __name__ == "__main__":
-    uvicorn.run(starlette_app, host="0.0.0.0", port=10000)
+    port = int(os.environ.get("PORT", 10000))
+    uvicorn.run(starlette_app, host="0.0.0.0", port=port)
